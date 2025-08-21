@@ -3,6 +3,7 @@ package casasBahia;
 import excecoes.CodigoInvalidoException;
 import excecoes.PrecoInvalidoException;
 import excecoes.QuantidadeLetrasInvalidoException;
+import excecoes.VoltagemNula;
 
 import java.util.Scanner;
 
@@ -34,6 +35,8 @@ public class Main {
                     } catch (CodigoInvalidoException e) {
                         System.out.println(e.getMessage());
                     } catch (QuantidadeLetrasInvalidoException e) {
+                        System.out.println(e.getMessage());
+                    } catch (VoltagemNula e) {
                         System.out.println(e.getMessage());
                     }
                     break;

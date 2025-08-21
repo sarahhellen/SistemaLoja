@@ -6,6 +6,7 @@ import java.util.Scanner;
 import excecoes.CodigoInvalidoException;
 import excecoes.PrecoInvalidoException;
 import excecoes.QuantidadeLetrasInvalidoException;
+import excecoes.VoltagemNula;
 
 public class Sistema {
 
@@ -15,7 +16,7 @@ public class Sistema {
         this.produtos = new ArrayList<Produto>();
     }
 
-    public void adicionarProduto(Scanner scanner) throws PrecoInvalidoException, CodigoInvalidoException, QuantidadeLetrasInvalidoException {
+    public void adicionarProduto(Scanner scanner) throws PrecoInvalidoException, CodigoInvalidoException, QuantidadeLetrasInvalidoException, VoltagemNula {
         System.out.println("Digite o nome do produto: ");
         String nome = scanner.nextLine();
         System.out.println("Digite o código: ");
@@ -65,7 +66,7 @@ public class Sistema {
 
     }
 
-    private void adicionarEletro (Scanner scanner, String nome, String codigo, double preco) throws CodigoInvalidoException {
+    private void adicionarEletro (Scanner scanner, String nome, String codigo, double preco) throws CodigoInvalidoException, VoltagemNula {
         CategoriaEletro categoriaEletro = null;
         System.out.println("Qual a categoria do eletrodomestico cadastrado?");
         System.out.println("1 - Cozinha");
@@ -75,7 +76,7 @@ public class Sistema {
         int opcaoCategoria = scanner.nextInt();
         scanner.nextLine();
 
-        // tratamento para opção fora das fornecidas
+        // tratamento para opção fora das fornecidas.
 
         if (opcaoCategoria < 1 & opcaoCategoria > 3){
             throw new CodigoInvalidoException("\n Codígo inválido \n");
@@ -87,9 +88,14 @@ public class Sistema {
         } else if (opcaoCategoria == 3) {
             categoriaEletro = CategoriaEletro.LAVANDERIA;
         }
-        System.out.println("Digite a voltagem");
+        System.out.println("Digite a voltagem: ");
         int voltagem = scanner.nextInt();
         scanner.nextLine();
+
+        if (voltagem == 0) {
+            throw new VoltagemNula("\n Quantidade de volts inexistente. \n");
+        }
+
         Eletrodomestico eletro = new Eletrodomestico(codigo, nome, preco, categoriaEletro, voltagem);
         produtos.add(eletro);
         System.out.println("Produto adicionado");
